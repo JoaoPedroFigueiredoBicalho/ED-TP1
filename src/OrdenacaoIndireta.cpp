@@ -155,6 +155,7 @@ void quickSort(int *indices, int l, int r, OrdInd_ptr poi, int chave)
 
 OrdInd_ptr Cria(const char *nomeDoArquivo)
 {
+	std::ifstream arquivo(nomeDoArquivo);
 
 	if (nomeDoArquivo == nullptr)
 	{
@@ -162,30 +163,29 @@ OrdInd_ptr Cria(const char *nomeDoArquivo)
 		return nullptr;
 	}
 
-	std::ifstream arquivo(nomeDoArquivo);
 	std::string linha;
 	int skip = 0;
 	int num_de_pessoas;
 
 	while (std::getline(arquivo, linha))
 	{
-		if (skip < 5)
+		if (skip < 5) // condição para pular as primeiras linhas do código
 		{
 			skip++;
 			continue;
 		}
-		std::istringstream ss(linha);
+		std::istringstream ss(linha); // lemos a linha que possui o tamanho do array
 		num_de_pessoas = std::stoi(linha);
 		break;
 	}
-	OrdInd_ptr poi = new OrdInd_t[num_de_pessoas + 1];
-	poi->num_de_pessoas = num_de_pessoas;
+	OrdInd_ptr poi = new OrdInd_t[num_de_pessoas + 1]; //criado o array de ponteiros do tamanho necessário
+	poi->num_de_pessoas = num_de_pessoas; //armazenamos esse tamanho para uso posterior
 	return poi;
 }
 
 void CarregaArquivo(OrdInd_ptr poi, const char *nomeDoArquivo, int *indices)
 {
-	std::ifstream arquivo(nomeDoArquivo);
+	std::ifstream arquivo(nomeDoArquivo); //leitura do arquivo
 
 	if (nomeDoArquivo == nullptr)
 	{
@@ -199,7 +199,7 @@ void CarregaArquivo(OrdInd_ptr poi, const char *nomeDoArquivo, int *indices)
 
 	while (std::getline(arquivo, linha))
 	{
-		if (skip < 6)
+		if (skip < 6) //condição para imprimir as primeiras linhas de maneira diferente
 		{
 			skip++;
 			poi[0].introducao += linha;
@@ -208,6 +208,7 @@ void CarregaArquivo(OrdInd_ptr poi, const char *nomeDoArquivo, int *indices)
 		}
 		std::istringstream ss(linha);
 		std::string token;
+		// condições para separar as entradas nos atributos corretos
 		if (std::getline(ss, token, ','))
 		{
 			poi[contador].nome = token;
