@@ -5,9 +5,6 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <chrono>
-
-using namespace std::chrono;
 
 // definicoes de chaves a serem usadas
 #define NOME 1
